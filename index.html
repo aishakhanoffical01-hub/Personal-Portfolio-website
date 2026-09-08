@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aisha Gul — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430;
+    --ink-soft:#3A4658;
+    --paper:#FAF6EF;
+    --paper-dim:#F1ECE1;
+    --ochre:#E8A33D;
+    --ochre-deep:#C6822A;
+    --line:#DDD5C4;
+    --green-dot:#5FA777;
+    --red-dot:#D9694F;
+    --yellow-dot:#E8C13D;
+    --sans:'Space Grotesk', sans-serif;
+    --mono:'JetBrains Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+  /* ---- nav ---- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,246,239,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:var(--mono);
+    font-weight:500;font-size:15px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--ochre);}
+  nav ul{list-style:none;display:flex;gap:4px;}
+  nav a.tab{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:8px 14px;
+    border-radius:6px 6px 0 0;
+    border:1px solid transparent;
+    display:inline-block;
+  }
+  nav a.tab:hover{
+    background:var(--paper-dim);
+    border-color:var(--line);
+    border-bottom-color:var(--paper);
+  }
+  .nav-toggle{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink);}
+
+  @media (max-width:720px){
+    nav ul{
+      display:none;position:absolute;top:64px;left:0;right:0;
+      flex-direction:column;background:var(--paper);
+      border-bottom:1px solid var(--line);padding:8px 20px 16px;gap:0;
+    }
+    nav ul.open{display:flex;}
+    nav a.tab{border-radius:6px;padding:12px 8px;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---- hero ---- */
+  .hero{
+    padding:80px 0 60px;
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;
+  }
+  @media (max-width:860px){ .hero{grid-template-columns:1fr;padding:48px 0 40px;} }
+
+  .eyebrow-line{
+    font-family:var(--mono);font-size:13px;color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  h1.headline{
+    font-size:clamp(34px,5vw,52px);
+    font-weight:700;line-height:1.08;letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  h1.headline .accent{color:var(--ochre-deep);}
+  .hero p.sub{
+    font-size:17px;color:var(--ink-soft);max-width:46ch;margin-bottom:30px;
+  }
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);font-size:14px;
+    padding:12px 22px;border-radius:8px;
+    display:inline-block;border:1.5px solid var(--ink);
+  }
+  .btn-solid{background:var(--ink);color:var(--paper);}
+  .btn-solid:hover{background:var(--ink-soft);}
+  .btn-outline:hover{background:var(--paper-dim);}
+
+  /* code window */
+  .code-window{
+    background:var(--ink);
+    border-radius:12px;
+    box-shadow:0 20px 50px -20px rgba(27,36,48,0.45);
+    overflow:hidden;
+  }
+  .code-topbar{
+    display:flex;align-items:center;gap:8px;
+    padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .code-dot{width:10px;height:10px;border-radius:50%;}
+  .code-title{
+    margin-left:10px;font-family:var(--mono);font-size:12px;color:#9AA6B8;
+  }
+  .code-body{
+    padding:22px 20px 26px;font-family:var(--mono);font-size:13.5px;
+    color:#D8DEE9;min-height:230px;
+  }
+  .code-body .k{color:#7FB8E0;}
+  .code-body .s{color:#E8C13D;}
+  .code-body .c{color:#6B7A8F;}
+  .cursor{display:inline-block;width:7px;height:15px;background:var(--ochre);vertical-align:middle;animation:blink 1s step-end infinite;margin-left:2px;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---- section shell ---- */
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .section-head{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:34px;
+  }
+  .section-num{font-family:var(--mono);font-size:13px;color:var(--ochre-deep);}
+  h2{font-size:28px;font-weight:700;letter-spacing:-0.01em;}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  @media (max-width:720px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid p{color:var(--ink-soft);margin-bottom:14px;}
+  .fact-list{list-style:none;}
+  .fact-list li{
+    display:flex;justify-content:space-between;
+    padding:11px 0;border-bottom:1px solid var(--line);
+    font-size:14.5px;
+  }
+  .fact-list li span:first-child{color:var(--ink-soft);}
+  .fact-list li span:last-child{font-weight:500;text-align:right;}
+
+  /* skills */
+  .skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:26px;}
+  .skill-card{
+    border:1px solid var(--line);border-radius:10px;padding:20px 20px 18px;
+    background:var(--paper-dim);
+  }
+  .skill-card h3{
+    font-family:var(--mono);font-size:13px;color:var(--ochre-deep);
+    margin-bottom:12px;font-weight:500;
+  }
+  .skill-card ul{list-style:none;}
+  .skill-card li{padding:5px 0;font-size:14.5px;color:var(--ink);}
+
+  /* project */
+  .project-card{
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:var(--paper-dim);
+  }
+  .project-top{padding:30px 30px 24px;}
+  .project-top h3{font-size:21px;margin-bottom:8px;}
+  .project-tagline{color:var(--ink-soft);font-size:15px;margin-bottom:18px;}
+  .stack-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .pill{
+    font-family:var(--mono);font-size:12px;
+    border:1px solid var(--line);border-radius:20px;
+    padding:5px 12px;color:var(--ink-soft);background:var(--paper);
+  }
+  .project-metrics{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line);
+  }
+  .metric{
+    padding:20px;text-align:center;border-left:1px solid var(--line);
+  }
+  .metric:first-child{border-left:none;}
+  .metric .num{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ochre-deep);}
+  .metric .lbl{font-size:12px;color:var(--ink-soft);margin-top:4px;}
+
+  /* education */
+  .edu-row{
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    padding:18px 0;border-bottom:1px solid var(--line);
+  }
+  .edu-row:last-child{border-bottom:none;}
+  .edu-row h4{font-size:16px;margin-bottom:4px;}
+  .edu-row p{font-size:14px;color:var(--ink-soft);}
+  .edu-row .when{font-family:var(--mono);font-size:13px;color:var(--ink-soft);white-space:nowrap;}
+
+  /* contact */
+  .contact-box{
+    border:1px solid var(--line);border-radius:14px;
+    padding:40px 34px;background:var(--paper-dim);
+    text-align:left;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+  }
+  .contact-box h2{margin-bottom:8px;}
+  .contact-box p{color:var(--ink-soft);font-size:15px;}
+  .contact-links{display:flex;flex-direction:column;gap:10px;font-family:var(--mono);font-size:14px;}
+  .contact-links a:hover{color:var(--ochre-deep);}
+
+  footer{
+    padding:26px 0 40px;text-align:center;
+    font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);
+  }
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="brand-dot"></span>aisha.dev</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    <nav>
+      <ul id="navList">
+        <li><a class="tab" href="#about">about.md</a></li>
+        <li><a class="tab" href="#skills">skills.json</a></li>
+        <li><a class="tab" href="#project">project.md</a></li>
+        <li><a class="tab" href="#education">education.md</a></li>
+        <li><a class="tab" href="#contact">contact.md</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero" style="border-top:none;">
+    <div>
+      <div class="eyebrow-line">Peshawar, Pakistan</div>
+      <h1 class="headline">Building things<br>on <span class="accent">both sides</span><br>of the stack.</h1>
+      <p class="sub">I'm Aisha Gul, a full stack developer and final-year Computer Science student. I build interfaces in the browser and the logic that runs behind them.</p>
+      <div class="btn-row">
+        <a href="#project" class="btn btn-solid">See my work</a>
+        <a href="#contact" class="btn btn-outline">Get in touch</a>
+      </div>
+    </div>
+    <div class="code-window">
+      <div class="code-topbar">
+        <span class="code-dot" style="background:var(--red-dot)"></span>
+        <span class="code-dot" style="background:var(--yellow-dot)"></span>
+        <span class="code-dot" style="background:var(--green-dot)"></span>
+        <span class="code-title">developer.js</span>
+      </div>
+      <div class="code-body" id="typeTarget"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head"><span class="section-num">01</span><h2>About</h2></div>
+    <div class="about-grid reveal">
+      <div>
+        <p>I'm in my final year of a BS in Computer Science, and along the way I've picked up both frontend and backend skills — from styling interfaces to training classification models.</p>
+        <p>My recent work sits at the intersection of mobile apps, backend APIs, and applied NLP, and I enjoy the full loop: designing a screen, wiring it to a server, and getting the data underneath it to behave.</p>
+      </div>
+      <ul class="fact-list">
+        <li><span>Based in</span><span>Peshawar, Pakistan</span></li>
+        <li><span>Studying</span><span>BS Computer Science</span></li>
+        <li><span>Languages spoken</span><span>Pashto, English, Urdu</span></li>
+        <li><span>Focus</span><span>Full stack development</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head"><span class="section-num">02</span><h2>Skills</h2></div>
+    <div class="skill-groups reveal">
+      <div class="skill-card">
+        <h3>&lt;/&gt; frontend</h3>
+        <ul><li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>WordPress (learning)</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>&#123;&#125; backend &amp; data</h3>
+        <ul><li>Python</li><li>Flask</li><li>MySQL</li><li>NLP / TF-IDF</li></ul>
+      </div>
+      <div class="skill-card">
+        <h3>◆ design &amp; tools</h3>
+        <ul><li>Canva</li><li>MS Office suite</li><li>SEO basics</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="project">
+    <div class="section-head"><span class="section-num">03</span><h2>Featured project</h2></div>
+    <div class="project-card reveal">
+      <div class="project-top">
+        <h3>Subtitle-Based Video Classifier</h3>
+        <p class="project-tagline">A mobile app that classifies video content by reading its subtitles — pairing a Flutter frontend with a Python NLP backend.</p>
+        <div class="stack-pills">
+          <span class="pill">Flutter</span>
+          <span class="pill">Python / Flask</span>
+          <span class="pill">TF-IDF</span>
+          <span class="pill">Ridge Classifier</span>
+          <span class="pill">MySQL</span>
+        </div>
+      </div>
+      <div class="project-metrics">
+        <div class="metric"><div class="num">93.35%</div><div class="lbl">classifier accuracy</div></div>
+        <div class="metric"><div class="num">Flask</div><div class="lbl">backend API</div></div>
+        <div class="metric"><div class="num">MySQL</div><div class="lbl">auth &amp; history</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head"><span class="section-num">04</span><h2>Education</h2></div>
+    <div class="reveal">
+      <div class="edu-row">
+        <div>
+          <h4>BS Computer Science</h4>
+          <p>Shaheed Benazir Bhutto Women University — Shaheed Alamzaib Commerce College</p>
+        </div>
+        <div class="when">Final year · 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head"><span class="section-num">05</span><h2>Contact</h2></div>
+    <div class="contact-box reveal">
+      <div>
+        <h2>Let's build something.</h2>
+        <p>Open to freelance work, internships, and full stack roles.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:aishasahibzada12345@gmail.com">aishasahibzada12345@gmail.com</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>&copy; 2026 Aisha Gul — built with HTML, CSS &amp; JavaScript</footer>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  navToggle.addEventListener('click', () => navList.classList.toggle('open'));
+  navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navList.classList.remove('open')));
+
+  // typing effect in the hero "code window"
+  const target = document.getElementById('typeTarget');
+  const lines = [
+    ['const ', 'k'], ['developer', ''], [' = {\n', ''],
+    ['  name', ''], [': ', ''], ["'Aisha Gul'", 's'], [',\n', ''],
+    ['  role', ''], [': ', ''], ["'Full Stack Developer'", 's'], [',\n', ''],
+    ['  location', ''], [': ', ''], ["'Peshawar, PK'", 's'], [',\n', ''],
+    ['  stack', ''], [': [', ''], ["'JS'", 's'], [', ', ''], ["'Python'", 's'], [', ', ''], ["'Flutter'", 's'], [', ', ''], ["'Flask'", 's'], ['],\n', ''],
+    ['  status', ''], [': ', ''], ["'open to work'", 's'], ['\n};', '']
+  ];
+  let full = lines.map(l => l[0]).join('');
+  let spans = [];
+  lines.forEach(l => {
+    if (l[1] === 'k') spans.push(`<span class="k">${l[0]}</span>`);
+    else if (l[1] === 's') spans.push(`<span class="s">${l[0]}</span>`);
+    else spans.push(l[0]);
+  });
+  let i = 0;
+  function type(){
+    if (i <= full.length){
+      // render progressively using plain text slice, then re-apply spans at the end
+      target.textContent = full.slice(0, i);
+      i += 2;
+      requestAnimationFrame(() => setTimeout(type, 12));
+    } else {
+      target.innerHTML = spans.join('') + '<span class="cursor"></span>';
+    }
+  }
+  type();
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
